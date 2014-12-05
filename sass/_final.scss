@@ -1,0 +1,69 @@
+@function hash($s)
+{
+	$h: 7;
+	$l: 'acdegilmnoprstuw';
+	$list: null;
+
+	@for $i from 1 through str-length($s) {
+		$mm: str-slice($s, $i, $i);
+		
+		$h: ($h * 37) + (str-index($l,$mm) - 1);
+	}
+
+	@return $h;
+}
+
+@function dehash($d)
+{
+	$hash: decompress($d);
+	$rev: implode($hash);
+
+	@return $rev;
+}
+
+@function decompress($d, $new: ())
+{
+	$l: 'acdegilmnoprstuw';
+	$list: ();
+	
+	$nl: null;
+	$num: null;
+
+	@for $i from 1 through str-length($l)
+	{
+		$nl: str-slice($l, $i, $i);
+		$list: append($list,$nl);
+	}
+
+	@for $i from 1 through str-length($l)
+	{
+		$who: ($d - $i) / 37;
+		$whol: inspect($who);
+		$whole: str-index($whol,'.');
+
+		@if $whole == null
+		{
+			@if $who > 6 
+			{
+				$new: append($new,nth($list,($i + 1)));
+
+				@if $who != 7 {
+					$new: decompress($who,$new);
+				}
+			}
+		}
+	}
+
+	@return $new;
+}
+
+@function implode($l)
+{
+	$string: '';
+
+	@each $s in $l {
+		$string: str-insert($string,$s,1);
+	}
+
+	@return $string;
+}

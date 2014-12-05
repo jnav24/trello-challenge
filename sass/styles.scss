@@ -1,0 +1,15 @@
+@import 'final';
+
+$test: hash('lollipop');
+
+body {
+	content: $test;
+	content: dehash($test);
+}
+
+
+
+
+
+
+
