@@ -35,22 +35,20 @@
 		$list: append($list,$nl);
 	}
 
-	@for $i from 1 through str-length($l)
-	{
-		$who: ($d - $i) / 37;
-		$whol: inspect($who);
-		$whole: str-index($whol,'.');
-
-		@if $whole == null
+	$i: 0;
+	
+	@while $d > 7 {
+		@if ($d - $i) % 37 == 0
 		{
-			@if $who > 6 
-			{
-				$new: append($new,nth($list,($i + 1)));
+			$d: ($d - $i) / 37;
 
-				@if $who != 7 {
-					$new: decompress($who,$new);
-				}
+			@if $i <= str-length($l) {
+				$new: append($new,nth($list,($i + 1)));
+				$i: 0;
 			}
+		}
+		@else {
+			$i: $i + 1;
 		}
 	}
 
