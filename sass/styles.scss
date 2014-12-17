@@ -1,10 +1,8 @@
 @import 'final';
 
-$test: hash('eric');
+$test: hash('supermansuperman');
 
 body {
 	content: $test;
-	content: dehash(677364891116);
-	content: round(261.864864865);
-	content: round(262.27027027);
+	content: dehash($test);
 }

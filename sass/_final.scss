@@ -15,6 +15,14 @@
 
 @function dehash($d)
 {
+
+	@if $d > 9223372036854775807
+	{
+		$warn: 'number exceeds max int allowed';
+		@warn $warn;
+		@return $warn;
+	}
+
 	$hash: decompress($d);
 	$rev: implode($hash);
 
@@ -27,7 +35,6 @@
 	$list: ();
 	
 	$nl: null;
-	$num: null;
 
 	@for $i from 1 through str-length($l)
 	{
@@ -36,16 +43,13 @@
 	}
 
 	$i: 0;
-	
+
 	@while $d > 7 {
 		@if ($d - $i) % 37 == 0
 		{
 			$d: ($d - $i) / 37;
-
-			@if $i <= str-length($l) {
-				$new: append($new,nth($list,($i + 1)));
-				$i: 0;
-			}
+			$new: append($new,nth($list,($i + 1)));
+			$i: 0;
 		}
 		@else {
 			$i: $i + 1;
@@ -57,6 +61,12 @@
 
 @function implode($l)
 {
+	@if type-of($l) != list {
+		$warn: 'value must be an array';
+		@warn $warn;
+		@return $warn;
+	}
+
 	$string: '';
 
 	@each $s in $l {

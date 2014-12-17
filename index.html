@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="js/angular.js"></script>
+	<script src="js/hash.js"></script>
+</head>
+<body>
+	{{ 4 + 4 }}
+
+	<div ng-controller="firstCtrl">
+		<h2>Hash</h2>
+		<input type="text" ng-model="data.string">
+		<input type="button" value="Hash me!" ng-click="hash(data.string)">
+		<p ng-show="show.hash"> {{ string.hash }} </p>
+	
+		<hr>
+	
+		<h2>Dehash</h2>
+		<input type="text" ng-model="string.hash">
+		<input type="button" value="Dehash me!" ng-click="dehash(string.hash)">
+		<p ng-show="show.dehash"> {{ string.dehash }}</p>
+	</div>
+</body>
+</html>
